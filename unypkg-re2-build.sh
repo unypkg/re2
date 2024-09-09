@@ -85,10 +85,10 @@ cmake \
     -DUSEPCRE=ON \
     .
 
-make DESTDIR=/uny/pkg/"$pkgname"/"$pkgver" -j"$(nproc)"
+make -j"$(nproc)"
 
-make DESTDIR=/uny/pkg/"$pkgname"/"$pkgver" install
-make DESTDIR=/uny/pkg/"$pkgname"/"$pkgver" testinstall
+make install
+make testinstall
 
 ####################################################
 ### End of individual build script
