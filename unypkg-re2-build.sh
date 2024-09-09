@@ -11,7 +11,7 @@ set -vx
 wget -qO- uny.nu/pkg | bash -s buildsys
 
 ### Installing build dependencies
-#unyp install python expat openssl
+unyp install abseil-cpp
 
 #pip3_bin=(/uny/pkg/python/*/bin/pip3)
 #"${pip3_bin[0]}" install --upgrade pip
@@ -35,13 +35,13 @@ mkdir -pv /uny/sources
 cd /uny/sources || exit
 
 pkgname="re2"
-pkggit="https://github.com/re2/re2.git refs/tags/*"
+pkggit="https://github.com/google/re2.git refs/tags/*"
 gitdepth="--depth=1"
 
 ### Get version info from git remote
 # shellcheck disable=SC2086
-latest_head="$(git ls-remote --refs --tags --sort="v:refname" $pkggit | grep -E "v[0-9.]+$" | tail --lines=1)"
-latest_ver="$(echo "$latest_head" | grep -o "v[0-9.].*" | sed "s|v||")"
+latest_head="$(git ls-remote --refs --tags --sort="v:refname" $pkggit | grep -E "/[0-9-]+$" | tail --lines=1)"
+latest_ver="$(echo "$latest_head" | grep -o "/[0-9-].*" | sed -e "s|/||" -e "s|-|.|g")"
 latest_commit_id="$(echo "$latest_head" | cut --fields=1)"
 
 version_details
@@ -77,12 +77,10 @@ get_include_paths
 
 unset LD_RUN_PATH
 
-./configure \
-    --prefix=/uny/pkg/"$pkgname"/"$pkgver"
+make DESTDIR=/uny/pkg/"$pkgname"/"$pkgver" -j"$(nproc)"
 
-make -j"$(nproc)"
-make -j"$(nproc)" check 
-make -j"$(nproc)" install
+make DESTDIR=/uny/pkg/"$pkgname"/"$pkgver" install
+make DESTDIR=/uny/pkg/"$pkgname"/"$pkgver" testinstall
 
 ####################################################
 ### End of individual build script
