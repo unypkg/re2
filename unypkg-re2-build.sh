@@ -80,7 +80,6 @@ unset LD_RUN_PATH
 cmake \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DCMAKE_INSTALL_PREFIX=/uny/pkg/"$pkgname"/"$pkgver" \
-    -DBUILD_SHARED_LIBS=ON \
     -DRE2_BUILD_TESTING=OFF \
     -DRE2_USE_ICU=ON \
     -DUSEPCRE=ON \
