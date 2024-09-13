@@ -11,7 +11,7 @@ set -vx
 wget -qO- uny.nu/pkg | bash -s buildsys
 
 ### Installing build dependencies
-unyp install abseil-cpp/20220623.1 cmake pcre python icu
+unyp install abseil-cpp/20220623.1 cmake pcre python #icu
 
 #pip3_bin=(/uny/pkg/python/*/bin/pip3)
 #"${pip3_bin[0]}" install --upgrade pip
@@ -81,7 +81,7 @@ cmake \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DCMAKE_INSTALL_PREFIX=/uny/pkg/"$pkgname"/"$pkgver" \
     -DRE2_BUILD_TESTING=OFF \
-    -DRE2_USE_ICU=ON \
+    -DRE2_USE_ICU=OFF \
     -DBUILD_SHARED_LIBS=OFF \
     -DUSEPCRE=ON \
     .
