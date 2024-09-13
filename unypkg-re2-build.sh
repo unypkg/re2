@@ -11,7 +11,7 @@ set -vx
 wget -qO- uny.nu/pkg | bash -s buildsys
 
 ### Installing build dependencies
-unyp install abseil-cpp/20240116.2 cmake pcre python icu
+unyp install abseil-cpp/20220623.1 cmake pcre python icu
 
 #pip3_bin=(/uny/pkg/python/*/bin/pip3)
 #"${pip3_bin[0]}" install --upgrade pip
@@ -35,7 +35,7 @@ mkdir -pv /uny/sources
 cd /uny/sources || exit
 
 pkgname="re2"
-pkggit="https://github.com/google/re2.git refs/tags/2024-06-01"
+pkggit="https://github.com/google/re2.git refs/tags/2023-03-01"
 gitdepth="--depth=1"
 
 ### Get version info from git remote
@@ -82,7 +82,7 @@ cmake \
     -DCMAKE_INSTALL_PREFIX=/uny/pkg/"$pkgname"/"$pkgver" \
     -DRE2_BUILD_TESTING=OFF \
     -DRE2_USE_ICU=ON \
-    -DBUILD_SHARED_LIBS=ON \
+    -DBUILD_SHARED_LIBS=OFF \
     -DUSEPCRE=ON \
     .
 
